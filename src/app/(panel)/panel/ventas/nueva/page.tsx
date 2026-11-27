@@ -9,7 +9,10 @@ export default async function NuevaVentaPage() {
 
   return (
     <>
-      <EncabezadoPagina titulo="Nueva venta" descripcion="El stock se descuenta al registrarla" />
+      <EncabezadoPagina
+        titulo="Nueva venta"
+        descripcion="El stock se descuenta al registrarla"
+      />
       <FormularioVenta clientes={clientes} />
     </>
   );
