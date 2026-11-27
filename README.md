@@ -146,6 +146,12 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
 - Cada usuario tiene un rol: `admin` o `vendedor`.
 - `npm run db:seed` crea un usuario de demo (`demo@smrepuestos.com.ar`); su contraseña está en `src/db/seed/usuarios.ts` o en `DEMO_PASSWORD`.
 
+### Stock
+
+- `/panel/stock`: listado paginado con búsqueda por código, descripción, marca o vehículo, filtro por rubro y por productos bajo el stock mínimo.
+- `/panel/stock/nuevo` y `/panel/stock/[id]`: alta y edición de productos. Los productos no se borran: se dan de baja y dejan de aparecer.
+- Cada cambio de stock queda registrado en `movimientos_stock` (ingreso inicial al crear, ajuste al editar).
+
 ## Base de datos
 
 El esquema vive en `src/db/schema/`, con una tabla por archivo:
