@@ -15,6 +15,13 @@
       "when": 1795807418019,
       "tag": "0001_auth",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1795811400322,
+      "tag": "0002_actualizaciones_precios",
+      "breakpoints": true
     }
   ]
 }
