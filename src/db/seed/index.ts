@@ -18,6 +18,7 @@ import {
   ventas,
 } from "../schema";
 import { proveedoresDemo, rubros, vehiculos } from "./catalogo";
+import { cargarUsuarioDemo, usuarioDemo } from "./usuarios";
 
 const CANTIDAD_PRODUCTOS = 200;
 const CANTIDAD_CLIENTES = 60;
@@ -40,6 +41,10 @@ async function limpiarTablas() {
     "productos",
     "clientes",
     "proveedores",
+    "session",
+    "account",
+    "verification",
+    "user",
   ];
   await db.execute(sql`SET FOREIGN_KEY_CHECKS = 0`);
   for (const tabla of tablas) {
@@ -294,7 +299,11 @@ async function main() {
   console.log("Cargando presupuestos...");
   await cargarPresupuestos(catalogo, clienteIds);
 
+  console.log("Creando usuario de demo...");
+  await cargarUsuarioDemo();
+
   console.log("Datos de prueba cargados.");
+  console.log(`Usuario de demo: ${usuarioDemo.email}`);
 }
 
 main()
