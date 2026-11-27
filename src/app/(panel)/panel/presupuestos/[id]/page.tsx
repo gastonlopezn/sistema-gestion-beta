@@ -13,6 +13,7 @@ import { urlWhatsAppPresupuesto } from "@/features/presupuestos/whatsapp";
 import { formatearDia, hoyEnArgentina } from "@/lib/fechas";
 import { formatearFechaHora, formatearPesos } from "@/lib/formato";
 import { requerirSesion } from "@/lib/sesion";
+import { cn } from "@/lib/utils";
 
 export default async function DetallePresupuestoPage({
   params,
@@ -56,7 +57,10 @@ export default async function DetallePresupuestoPage({
           href={urlWhatsAppPresupuesto(presupuesto)}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${buttonVariants({ size: "lg" })} bg-[#25d366] text-white hover:bg-[#1ebe5b]`}
+          className={cn(
+            buttonVariants({ size: "lg" }),
+            "bg-[#25d366] text-white hover:bg-[#1ebe5b]",
+          )}
         >
           <IconoWhatsapp className="size-4" />
           Enviar por WhatsApp
