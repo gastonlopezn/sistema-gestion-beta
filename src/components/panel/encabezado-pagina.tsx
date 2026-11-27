@@ -1,10 +1,18 @@
-export function EncabezadoPagina({ titulo, descripcion }: { titulo: string; descripcion?: string }) {
+export function EncabezadoPagina({
+  titulo,
+  descripcion,
+}: {
+  titulo: string;
+  descripcion?: string;
+}) {
   return (
     <div className="mb-6">
-      <h1 className="font-heading text-3xl font-extrabold text-marca-azul uppercase italic">
+      <h1 className="font-heading text-marca-azul text-3xl font-extrabold uppercase italic">
         {titulo}
       </h1>
-      {descripcion && <p className="text-sm text-muted-foreground">{descripcion}</p>}
+      {descripcion && (
+        <p className="text-muted-foreground text-sm">{descripcion}</p>
+      )}
     </div>
   );
 }

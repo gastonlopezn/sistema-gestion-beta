@@ -19,14 +19,16 @@ export default async function PanelInicio() {
           <li key={href}>
             <Link
               href={href}
-              className="flex h-full items-start gap-4 border-l-4 border-marca-rojo bg-white p-5 shadow-sm transition hover:shadow-md"
+              className="border-marca-rojo flex h-full items-start gap-4 border-l-4 bg-white p-5 shadow-sm transition hover:shadow-md"
             >
-              <Icono className="mt-1 size-6 text-marca-azul" />
+              <Icono className="text-marca-azul mt-1 size-6" />
               <span>
-                <span className="block font-heading text-xl font-bold text-marca-azul uppercase italic">
+                <span className="font-heading text-marca-azul block text-xl font-bold uppercase italic">
                   {nombre}
                 </span>
-                <span className="text-sm text-muted-foreground">{descripcion}</span>
+                <span className="text-muted-foreground text-sm">
+                  {descripcion}
+                </span>
               </span>
             </Link>
           </li>
