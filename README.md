@@ -135,3 +135,7 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
 | `DATABASE_URL` | Conexión a MySQL. En local coincide con `docker-compose.yml`. |
 
 Nunca subir `.env` al repo; en producción las variables se cargan en Vercel.
+
+## Deploy
+
+`main` se despliega a producción y `develop` y cada PR tienen su preview en Vercel. Ver [docs/deploy.md](./docs/deploy.md).
