@@ -29,7 +29,7 @@ export function GraficoFacturacion({ meses }: { meses: Mes[] }) {
         Últimos {meses.length} meses. El último está en curso.
       </p>
 
-      <div className="flex gap-2">
+      <div className="mt-8 flex gap-2">
         {/* Eje Y */}
         <div
           className="text-muted-foreground relative w-14 shrink-0 text-right text-xs tabular-nums"
