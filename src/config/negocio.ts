@@ -3,7 +3,12 @@
 export const negocio = {
   nombre: "SM Repuestos",
   descripcion:
-    "Repuestos para tu vehículo en Río Cuarto. Consultanos por WhatsApp o acercate al local.",
+    "Especialistas en repuestos Ford y Chevrolet en Río Cuarto. Originales y alternativos, con stock permanente y asesoramiento personalizado.",
+  historia: {
+    nombreAnterior: "Sarmiento Repuestos",
+    desde: 1974,
+  },
+  marcas: ["Ford", "Chevrolet"],
   direccion: {
     calle: "Av. Sabattini 1999",
     ciudad: "Río Cuarto",
@@ -16,6 +21,10 @@ export const negocio = {
     // Formato internacional sin espacios ni signos, para wa.me.
     numero: "5493585098884",
     mensaje: "Hola SM Repuestos, quería hacer una consulta.",
+  },
+  telefono: {
+    visible: "358 576-0980",
+    numero: "+543585760980",
   },
   instagram: {
     usuario: "smrepuestosfyc",
