@@ -18,7 +18,10 @@ export const ventaSchema = z.object({
     .array(
       z.object({
         productoId: z.number().int().positive(),
-        cantidad: z.number().int().positive("La cantidad tiene que ser mayor a 0"),
+        cantidad: z
+          .number()
+          .int()
+          .positive("La cantidad tiene que ser mayor a 0"),
       }),
     )
     .min(1, "Agregá al menos un producto"),
