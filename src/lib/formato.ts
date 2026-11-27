@@ -24,6 +24,7 @@ const pesosCompacto = new Intl.NumberFormat("es-AR", {
   currency: "ARS",
   notation: "compact",
   maximumFractionDigits: 1,
+  trailingZeroDisplay: "stripIfInteger",
 });
 
 // 145645900 -> "$ 145,6 M". Para ejes y tarjetas donde el número completo no entra.
