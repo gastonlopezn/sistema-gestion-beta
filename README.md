@@ -63,6 +63,8 @@ La app queda en http://localhost:3000.
 | `npm run db:migrate` | Aplica las migraciones pendientes |
 | `npm run db:seed` | Borra los datos y carga datos de prueba (nunca en producción) |
 | `npm run db:studio` | Abre Drizzle Studio para ver la base en el navegador |
+| `npm run docs:capturas` | Saca las capturas de la presentación (con la app corriendo) |
+| `npm run docs:presentacion` | Genera el PDF de la presentación para el cliente. Ver [docs/presentacion](./docs/presentacion/README.md) |
 
 ## Estructura de carpetas
 
