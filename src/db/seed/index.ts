@@ -33,6 +33,7 @@ const redondear = (n: number) => Math.round(n / 50) * 50;
 
 async function limpiarTablas() {
   const tablas = [
+    "actualizaciones_precios",
     "movimientos_stock",
     "presupuesto_items",
     "presupuestos",

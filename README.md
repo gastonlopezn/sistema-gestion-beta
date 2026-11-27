@@ -153,6 +153,7 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
 - `/panel/stock`: listado paginado con búsqueda por código, descripción, marca o vehículo, filtro por rubro y por productos bajo el stock mínimo.
 - `/panel/stock/nuevo` y `/panel/stock/[id]`: alta y edición de productos. Los productos no se borran: se dan de baja y dejan de aparecer.
 - Cada cambio de stock queda registrado en `movimientos_stock` (ingreso inicial al crear, ajuste al editar).
+- `/panel/stock/precios`: actualización masiva de precios. Filtra por rubro, marca o proveedor, aplica un porcentaje (positivo o negativo) al precio de venta, al costo o a ambos, y redondea el precio de venta hacia arriba a múltiplos de 10, 50 o 100. Primero muestra una vista previa con el precio actual y el nuevo; al confirmar recalcula todo en el servidor en una transacción y lo registra en `actualizaciones_precios` (quién, cuándo, cuánto y a qué productos).
 
 ### Ventas
 

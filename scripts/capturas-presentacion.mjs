@@ -43,6 +43,13 @@ await panel.goto(`${BASE}/panel/stock`);
 await panel.waitForSelector("tbody tr");
 await panel.screenshot({ path: archivo("stock.png") });
 
+// Vista previa de un aumento (no se aplica).
+await panel.goto(
+  `${BASE}/panel/stock/precios?rubro=Frenos&porcentaje=8&campo=precio&redondeo=100`,
+);
+await panel.waitForSelector("text=Vista previa");
+await panel.screenshot({ path: archivo("precios.png") });
+
 await panel.goto(`${BASE}/panel/ventas/nueva`);
 const buscador = panel.getByLabel("Buscar producto");
 for (const texto of ["aceite", "bujia", "pastilla"]) {

@@ -5,5 +5,6 @@ export * from "./clientes";
 export * from "./ventas";
 export * from "./presupuestos";
 export * from "./movimientos-stock";
+export * from "./actualizaciones-precios";
 export * from "./relations";
 export * from "./auth";
