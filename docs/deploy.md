@@ -28,6 +28,8 @@ Se cargan en **Settings → Environment Variables**, separadas por entorno (Prod
 | Variable | Production | Preview | Cuándo |
 | --- | --- | --- | --- |
 | `DATABASE_URL` | base MySQL de producción | base MySQL de demo/pruebas | al conectar la base (issue #3) |
+| `BETTER_AUTH_SECRET` | secreto propio | otro secreto | para que funcione el login (issue #6) |
+| `BETTER_AUTH_URL` | URL de producción | URL fija de `develop` | para que funcione el login (issue #6) |
 
 ## Plan
 
