@@ -1,7 +1,7 @@
 "use client";
 
 import { Minus, Plus, Search, X } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,15 +25,27 @@ export function Carrito({
   setLineas: React.Dispatch<React.SetStateAction<Linea[]>>;
 }) {
   const [busqueda, setBusqueda] = useState("");
-  const [resultados, setResultados] = useState<ProductoParaVenta[]>([]);
-  const [buscando, iniciarBusqueda] = useTransition();
+  // Cada respuesta guarda el texto que la originó: si no coincide con lo escrito, está desactualizada.
+  const [respuesta, setRespuesta] = useState<{
+    texto: string;
+    productos: ProductoParaVenta[];
+  }>({ texto: "", productos: [] });
+  const [, iniciarBusqueda] = useTransition();
+  const ultimaBusqueda = useRef("");
+  const texto = busqueda.trim();
+  const buscando = respuesta.texto !== texto;
+  const resultados = buscando ? [] : respuesta.productos;
 
   // Busca 300 ms después de que se deja de escribir.
   useEffect(() => {
+    ultimaBusqueda.current = busqueda;
     const espera = setTimeout(() => {
-      iniciarBusqueda(async () =>
-        setResultados(await buscarProductos(busqueda)),
-      );
+      iniciarBusqueda(async () => {
+        const productos = await buscarProductos(busqueda);
+        // Una respuesta lenta de una búsqueda anterior no pisa la actual.
+        if (ultimaBusqueda.current === busqueda)
+          setRespuesta({ texto: busqueda.trim(), productos });
+      });
     }, 300);
     return () => clearTimeout(espera);
   }, [busqueda]);
