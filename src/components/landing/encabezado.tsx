@@ -2,12 +2,14 @@ import Image from "next/image";
 
 import { buttonVariants } from "@/components/ui/button";
 import { negocio, urlWhatsapp } from "@/config/negocio";
+import { cn } from "@/lib/utils";
 
 import { IconoWhatsapp } from "./icono-whatsapp";
 
 const enlaces = [
-  { href: "#horarios", texto: "Horarios" },
+  { href: "#rubros", texto: "Repuestos" },
   { href: "#ubicacion", texto: "Ubicación" },
+  { href: "#horarios", texto: "Horarios" },
   { href: "#contacto", texto: "Contacto" },
 ];
 
@@ -24,7 +26,7 @@ export function Encabezado() {
             priority
           />
         </a>
-        <nav className="hidden gap-6 text-sm font-medium text-marca-azul sm:flex">
+        <nav className="hidden gap-6 font-heading text-lg font-bold text-marca-azul uppercase italic sm:flex">
           {enlaces.map((enlace) => (
             <a key={enlace.href} href={enlace.href} className="hover:text-marca-rojo">
               {enlace.texto}
@@ -35,7 +37,7 @@ export function Encabezado() {
           href={urlWhatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className={buttonVariants({ size: "lg" })}
+          className={cn(buttonVariants({ size: "lg" }), "rounded-full px-4")}
         >
           <IconoWhatsapp className="size-4" />
           Escribinos
