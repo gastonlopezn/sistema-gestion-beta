@@ -3,7 +3,9 @@ const ZONA = "America/Argentina/Cordoba";
 
 // AAAA-MM-DD del día de hoy en Argentina.
 export function hoyEnArgentina(): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: ZONA }).format(new Date());
+  return new Intl.DateTimeFormat("en-CA", { timeZone: ZONA }).format(
+    new Date(),
+  );
 }
 
 export function sumarDias(dia: string, dias: number): string {
