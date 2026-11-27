@@ -1,6 +1,7 @@
 import { Beneficios } from "@/components/landing/beneficios";
 import { BotonWhatsappFlotante } from "@/components/landing/boton-whatsapp-flotante";
 import { Contacto } from "@/components/landing/contacto";
+import { DatosEstructurados } from "@/components/landing/datos-estructurados";
 import { Encabezado } from "@/components/landing/encabezado";
 import { Historia } from "@/components/landing/historia";
 import { PiePagina } from "@/components/landing/pie-pagina";
@@ -22,6 +23,7 @@ export default function Inicio() {
       </main>
       <PiePagina />
       <BotonWhatsappFlotante />
+      <DatosEstructurados />
     </>
   );
 }
