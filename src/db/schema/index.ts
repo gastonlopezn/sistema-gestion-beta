@@ -1,2 +1,2 @@
 // Cada tabla vive en su propio archivo y se re-exporta acá.
-export {};
+export * from "./proveedores";
