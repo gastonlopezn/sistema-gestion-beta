@@ -59,7 +59,7 @@ export function Rubros() {
           Stock permanente de repuestos originales y alternativos. Si no lo ves
           acá, consultanos: lo conseguimos.
         </p>
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {rubros.map(({ icono: Icono, nombre, detalle }) => (
             <li
               key={nombre}
