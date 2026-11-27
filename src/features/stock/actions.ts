@@ -28,12 +28,10 @@ function leerFormulario(formData: FormData) {
   return { ok: true as const, datos: resultado.data, valores };
 }
 
-function esCodigoDuplicado(error: unknown) {
-  return (
-    error instanceof Error &&
-    "cause" in error &&
-    (error.cause as { code?: string } | undefined)?.code === "ER_DUP_ENTRY"
-  );
+function esCodigoDuplicado(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  if ("code" in error && error.code === "ER_DUP_ENTRY") return true;
+  return "cause" in error && esCodigoDuplicado(error.cause);
 }
 
 export async function crearProducto(
