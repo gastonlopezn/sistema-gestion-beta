@@ -168,6 +168,14 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
   - **Enviar por WhatsApp**: abre `wa.me` con el detalle y el total. Si el teléfono del cliente se puede interpretar como número argentino, abre directo su chat; si no, WhatsApp deja elegir el contacto. El PDF no se adjunta solo: wa.me solo acepta texto.
   - **Convertir en venta** (o marcarlo como rechazado): registra la venta con los precios del presupuesto, descuenta stock y deja el presupuesto como aceptado con el enlace a la venta.
 
+### Estadísticas
+
+- `/panel/estadisticas`: selector de período (30, 90 o 180 días) que afecta a las tarjetas, los más vendidos y los artículos sin movimiento.
+- Tarjetas de facturación, cantidad de ventas y ticket promedio comparados con el período anterior, y valor del inventario a costo.
+- Facturación de los últimos 6 meses (meses en hora de Argentina; el actual se marca en curso), con tooltip y vista de tabla.
+- Los 10 productos más vendidos por unidades y los artículos con stock sin ventas en el período, ordenados por plata inmovilizada.
+- Los gráficos están hechos con HTML y CSS, sin librerías. El color de las barras (`#4a3d9e`) es un paso más claro que el azul de la marca para que se distinga como relleno.
+
 ## Base de datos
 
 El esquema vive en `src/db/schema/`, con una tabla por archivo:
