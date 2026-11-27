@@ -21,15 +21,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SM Repuestos",
-  description: "Sitio y sistema de gestión de SM Repuestos",
+  title: {
+    default: "SM Repuestos | Repuestos Ford y Chevrolet en Río Cuarto",
+    template: "%s | SM Repuestos",
+  },
+  description:
+    "Repuestos originales y alternativos para Ford y Chevrolet en Río Cuarto, Córdoba. Av. Sabattini 1999. Envíos a todo el país y 3 cuotas sin interés.",
+  keywords: ["repuestos", "Ford", "Chevrolet", "Río Cuarto", "autopartes", "Sarmiento Repuestos"],
+  icons: { icon: "/images/logo-sm-repuestos.png" },
+  openGraph: {
+    title: "SM Repuestos | Repuestos Ford y Chevrolet en Río Cuarto",
+    description: "Repuestos originales y alternativos para Ford y Chevrolet. Av. Sabattini 1999, Río Cuarto.",
+    locale: "es_AR",
+    type: "website",
+    images: ["/images/logo-sm-repuestos.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-AR"
-      className={`${geistSans.variable} ${geistMono.variable} ${barlowCondensed.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${barlowCondensed.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
