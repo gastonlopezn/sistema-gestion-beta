@@ -1,6 +1,6 @@
 ## Qué cambia
 
-<!-- Resumen corto. Agregá "Closes #N" para cerrar la issue al mergear. -->
+<!-- Resumen corto. Los PRs de features van hacia develop; solo develop se mergea a main. -->
 
 ## Cómo probarlo
 
