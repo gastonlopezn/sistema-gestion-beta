@@ -41,19 +41,35 @@ export const rubros: Rubro[] = [
   {
     nombre: "Filtros",
     marcas: ["Fram", "Mann", "Mahle", "Wega"],
-    productos: ["Filtro de aceite", "Filtro de aire", "Filtro de combustible", "Filtro de habitáculo"],
+    productos: [
+      "Filtro de aceite",
+      "Filtro de aire",
+      "Filtro de combustible",
+      "Filtro de habitáculo",
+    ],
     costo: [6000, 30000],
   },
   {
     nombre: "Frenos",
     marcas: ["Ferodo", "Fras-le", "Bosch", "TRW"],
-    productos: ["Pastillas de freno delanteras", "Disco de freno", "Cintas de freno traseras", "Bomba de freno"],
+    productos: [
+      "Pastillas de freno delanteras",
+      "Disco de freno",
+      "Cintas de freno traseras",
+      "Bomba de freno",
+    ],
     costo: [18000, 120000],
   },
   {
     nombre: "Suspensión",
     marcas: ["Monroe", "Corven", "Sachs", "Fric-Rot"],
-    productos: ["Amortiguador delantero", "Amortiguador trasero", "Rótula", "Bieleta", "Buje de parrilla"],
+    productos: [
+      "Amortiguador delantero",
+      "Amortiguador trasero",
+      "Rótula",
+      "Bieleta",
+      "Buje de parrilla",
+    ],
     costo: [9000, 160000],
   },
   {
@@ -65,7 +81,12 @@ export const rubros: Rubro[] = [
   {
     nombre: "Distribución",
     marcas: ["Gates", "Dayco", "SKF", "Contitech"],
-    productos: ["Kit de distribución", "Correa poly-V", "Tensor de correa", "Bomba de agua"],
+    productos: [
+      "Kit de distribución",
+      "Correa poly-V",
+      "Tensor de correa",
+      "Bomba de agua",
+    ],
     costo: [25000, 250000],
   },
   {
@@ -77,19 +98,34 @@ export const rubros: Rubro[] = [
   {
     nombre: "Refrigeración",
     marcas: ["Valeo", "Nissens", "Mahle"],
-    productos: ["Termostato", "Radiador", "Electroventilador", "Manguera de radiador"],
+    productos: [
+      "Termostato",
+      "Radiador",
+      "Electroventilador",
+      "Manguera de radiador",
+    ],
     costo: [8000, 200000],
   },
   {
     nombre: "Eléctrico",
     marcas: ["Bosch", "Moura", "Valeo"],
-    productos: ["Batería 12V 65Ah", "Alternador", "Burro de arranque", "Sensor de temperatura"],
+    productos: [
+      "Batería 12V 65Ah",
+      "Alternador",
+      "Burro de arranque",
+      "Sensor de temperatura",
+    ],
     costo: [12000, 300000],
   },
   {
     nombre: "Lubricantes",
     marcas: ["YPF Elaion", "Shell Helix", "Castrol", "Total"],
-    productos: ["Aceite 10W40 4L", "Aceite 5W30 4L", "Líquido refrigerante 1L", "Líquido de frenos DOT4"],
+    productos: [
+      "Aceite 10W40 4L",
+      "Aceite 5W30 4L",
+      "Líquido refrigerante 1L",
+      "Líquido de frenos DOT4",
+    ],
     costo: [5000, 60000],
   },
   {

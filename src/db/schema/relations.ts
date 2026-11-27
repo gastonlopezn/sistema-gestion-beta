@@ -25,7 +25,10 @@ export const clientesRelations = relations(clientes, ({ many }) => ({
 }));
 
 export const ventasRelations = relations(ventas, ({ one, many }) => ({
-  cliente: one(clientes, { fields: [ventas.clienteId], references: [clientes.id] }),
+  cliente: one(clientes, {
+    fields: [ventas.clienteId],
+    references: [clientes.id],
+  }),
   items: many(ventaItems),
 }));
 
@@ -37,30 +40,45 @@ export const ventaItemsRelations = relations(ventaItems, ({ one }) => ({
   }),
 }));
 
-export const presupuestosRelations = relations(presupuestos, ({ one, many }) => ({
-  cliente: one(clientes, {
-    fields: [presupuestos.clienteId],
-    references: [clientes.id],
+export const presupuestosRelations = relations(
+  presupuestos,
+  ({ one, many }) => ({
+    cliente: one(clientes, {
+      fields: [presupuestos.clienteId],
+      references: [clientes.id],
+    }),
+    venta: one(ventas, {
+      fields: [presupuestos.ventaId],
+      references: [ventas.id],
+    }),
+    items: many(presupuestoItems),
   }),
-  venta: one(ventas, { fields: [presupuestos.ventaId], references: [ventas.id] }),
-  items: many(presupuestoItems),
-}));
+);
 
-export const presupuestoItemsRelations = relations(presupuestoItems, ({ one }) => ({
-  presupuesto: one(presupuestos, {
-    fields: [presupuestoItems.presupuestoId],
-    references: [presupuestos.id],
+export const presupuestoItemsRelations = relations(
+  presupuestoItems,
+  ({ one }) => ({
+    presupuesto: one(presupuestos, {
+      fields: [presupuestoItems.presupuestoId],
+      references: [presupuestos.id],
+    }),
+    producto: one(productos, {
+      fields: [presupuestoItems.productoId],
+      references: [productos.id],
+    }),
   }),
-  producto: one(productos, {
-    fields: [presupuestoItems.productoId],
-    references: [productos.id],
-  }),
-}));
+);
 
-export const movimientosStockRelations = relations(movimientosStock, ({ one }) => ({
-  producto: one(productos, {
-    fields: [movimientosStock.productoId],
-    references: [productos.id],
+export const movimientosStockRelations = relations(
+  movimientosStock,
+  ({ one }) => ({
+    producto: one(productos, {
+      fields: [movimientosStock.productoId],
+      references: [productos.id],
+    }),
+    venta: one(ventas, {
+      fields: [movimientosStock.ventaId],
+      references: [ventas.id],
+    }),
   }),
-  venta: one(ventas, { fields: [movimientosStock.ventaId], references: [ventas.id] }),
-}));
+);

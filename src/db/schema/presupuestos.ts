@@ -24,7 +24,9 @@ export const presupuestos = mysqlTable("presupuestos", {
     .default("pendiente"),
   total: decimal("total", { precision: 12, scale: 2 }).notNull(),
   // Se completa cuando el presupuesto se convierte en venta.
-  ventaId: int("venta_id").references(() => ventas.id, { onDelete: "set null" }),
+  ventaId: int("venta_id").references(() => ventas.id, {
+    onDelete: "set null",
+  }),
   notas: text("notas"),
 });
 
@@ -37,6 +39,9 @@ export const presupuestoItems = mysqlTable("presupuesto_items", {
     .notNull()
     .references(() => productos.id),
   cantidad: int("cantidad").notNull(),
-  precioUnitario: decimal("precio_unitario", { precision: 12, scale: 2 }).notNull(),
+  precioUnitario: decimal("precio_unitario", {
+    precision: 12,
+    scale: 2,
+  }).notNull(),
   subtotal: decimal("subtotal", { precision: 12, scale: 2 }).notNull(),
 });

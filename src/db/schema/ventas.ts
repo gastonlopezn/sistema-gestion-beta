@@ -27,7 +27,9 @@ export const ventas = mysqlTable(
       onDelete: "set null",
     }),
     fecha: timestamp("fecha").notNull().defaultNow(),
-    medioPago: mysqlEnum("medio_pago", mediosDePago).notNull().default("efectivo"),
+    medioPago: mysqlEnum("medio_pago", mediosDePago)
+      .notNull()
+      .default("efectivo"),
     total: decimal("total", { precision: 12, scale: 2 }).notNull(),
     notas: text("notas"),
   },
@@ -44,6 +46,9 @@ export const ventaItems = mysqlTable("venta_items", {
     .references(() => productos.id),
   cantidad: int("cantidad").notNull(),
   // Precio al momento de la venta: no cambia si después se actualiza el precio del producto.
-  precioUnitario: decimal("precio_unitario", { precision: 12, scale: 2 }).notNull(),
+  precioUnitario: decimal("precio_unitario", {
+    precision: 12,
+    scale: 2,
+  }).notNull(),
   subtotal: decimal("subtotal", { precision: 12, scale: 2 }).notNull(),
 });

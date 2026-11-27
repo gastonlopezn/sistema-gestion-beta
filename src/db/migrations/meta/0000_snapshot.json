@@ -56,9 +56,7 @@
       "compositePrimaryKeys": {
         "proveedores_id": {
           "name": "proveedores_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -177,16 +175,12 @@
       "indexes": {
         "productos_descripcion_idx": {
           "name": "productos_descripcion_idx",
-          "columns": [
-            "descripcion"
-          ],
+          "columns": ["descripcion"],
           "isUnique": false
         },
         "productos_marca_idx": {
           "name": "productos_marca_idx",
-          "columns": [
-            "marca"
-          ],
+          "columns": ["marca"],
           "isUnique": false
         }
       },
@@ -195,12 +189,8 @@
           "name": "productos_proveedor_id_proveedores_id_fk",
           "tableFrom": "productos",
           "tableTo": "proveedores",
-          "columnsFrom": [
-            "proveedor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["proveedor_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -208,17 +198,13 @@
       "compositePrimaryKeys": {
         "productos_id": {
           "name": "productos_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {
         "productos_codigo_unique": {
           "name": "productos_codigo_unique",
-          "columns": [
-            "codigo"
-          ]
+          "columns": ["codigo"]
         }
       },
       "checkConstraint": {}
@@ -290,9 +276,7 @@
       "compositePrimaryKeys": {
         "clientes_id": {
           "name": "clientes_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -350,12 +334,8 @@
           "name": "venta_items_venta_id_ventas_id_fk",
           "tableFrom": "venta_items",
           "tableTo": "ventas",
-          "columnsFrom": [
-            "venta_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["venta_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -363,12 +343,8 @@
           "name": "venta_items_producto_id_productos_id_fk",
           "tableFrom": "venta_items",
           "tableTo": "productos",
-          "columnsFrom": [
-            "producto_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["producto_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -376,9 +352,7 @@
       "compositePrimaryKeys": {
         "venta_items_id": {
           "name": "venta_items_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -435,9 +409,7 @@
       "indexes": {
         "ventas_fecha_idx": {
           "name": "ventas_fecha_idx",
-          "columns": [
-            "fecha"
-          ],
+          "columns": ["fecha"],
           "isUnique": false
         }
       },
@@ -446,12 +418,8 @@
           "name": "ventas_cliente_id_clientes_id_fk",
           "tableFrom": "ventas",
           "tableTo": "clientes",
-          "columnsFrom": [
-            "cliente_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["cliente_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -459,9 +427,7 @@
       "compositePrimaryKeys": {
         "ventas_id": {
           "name": "ventas_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -519,12 +485,8 @@
           "name": "presupuesto_items_presupuesto_id_presupuestos_id_fk",
           "tableFrom": "presupuesto_items",
           "tableTo": "presupuestos",
-          "columnsFrom": [
-            "presupuesto_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["presupuesto_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -532,12 +494,8 @@
           "name": "presupuesto_items_producto_id_productos_id_fk",
           "tableFrom": "presupuesto_items",
           "tableTo": "productos",
-          "columnsFrom": [
-            "producto_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["producto_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -545,9 +503,7 @@
       "compositePrimaryKeys": {
         "presupuesto_items_id": {
           "name": "presupuesto_items_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -621,12 +577,8 @@
           "name": "presupuestos_cliente_id_clientes_id_fk",
           "tableFrom": "presupuestos",
           "tableTo": "clientes",
-          "columnsFrom": [
-            "cliente_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["cliente_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -634,12 +586,8 @@
           "name": "presupuestos_venta_id_ventas_id_fk",
           "tableFrom": "presupuestos",
           "tableTo": "ventas",
-          "columnsFrom": [
-            "venta_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["venta_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -647,9 +595,7 @@
       "compositePrimaryKeys": {
         "presupuestos_id": {
           "name": "presupuestos_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},
@@ -712,10 +658,7 @@
       "indexes": {
         "movimientos_producto_fecha_idx": {
           "name": "movimientos_producto_fecha_idx",
-          "columns": [
-            "producto_id",
-            "fecha"
-          ],
+          "columns": ["producto_id", "fecha"],
           "isUnique": false
         }
       },
@@ -724,12 +667,8 @@
           "name": "movimientos_stock_producto_id_productos_id_fk",
           "tableFrom": "movimientos_stock",
           "tableTo": "productos",
-          "columnsFrom": [
-            "producto_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["producto_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -737,12 +676,8 @@
           "name": "movimientos_stock_venta_id_ventas_id_fk",
           "tableFrom": "movimientos_stock",
           "tableTo": "ventas",
-          "columnsFrom": [
-            "venta_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["venta_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -750,9 +685,7 @@
       "compositePrimaryKeys": {
         "movimientos_stock_id": {
           "name": "movimientos_stock_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {},

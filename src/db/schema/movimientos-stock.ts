@@ -18,10 +18,17 @@ export const movimientosStock = mysqlTable(
     productoId: int("producto_id")
       .notNull()
       .references(() => productos.id, { onDelete: "cascade" }),
-    tipo: mysqlEnum("tipo", ["ingreso", "venta", "ajuste", "devolucion"]).notNull(),
+    tipo: mysqlEnum("tipo", [
+      "ingreso",
+      "venta",
+      "ajuste",
+      "devolucion",
+    ]).notNull(),
     // Positivo suma stock, negativo resta.
     cantidad: int("cantidad").notNull(),
-    ventaId: int("venta_id").references(() => ventas.id, { onDelete: "set null" }),
+    ventaId: int("venta_id").references(() => ventas.id, {
+      onDelete: "set null",
+    }),
     motivo: varchar("motivo", { length: 255 }),
     fecha: timestamp("fecha").notNull().defaultNow(),
   },

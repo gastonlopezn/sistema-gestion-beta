@@ -53,10 +53,14 @@ async function cargarProveedores() {
     proveedoresDemo.map((nombre) => ({
       nombre,
       telefono: faker.phone.number(),
-      email: faker.internet.email({ firstName: nombre.split(" ")[0] }).toLowerCase(),
+      email: faker.internet
+        .email({ firstName: nombre.split(" ")[0] })
+        .toLowerCase(),
     })),
   );
-  return (await db.select({ id: proveedores.id }).from(proveedores)).map((p) => p.id);
+  return (await db.select({ id: proveedores.id }).from(proveedores)).map(
+    (p) => p.id,
+  );
 }
 
 async function cargarProductos(proveedorIds: number[]) {
@@ -73,7 +77,9 @@ async function cargarProductos(proveedorIds: number[]) {
     } while (codigos.has(codigo));
     codigos.add(codigo);
 
-    const costo = redondear(faker.number.int({ min: rubro.costo[0], max: rubro.costo[1] }));
+    const costo = redondear(
+      faker.number.int({ min: rubro.costo[0], max: rubro.costo[1] }),
+    );
     const margen = faker.number.float({ min: 1.35, max: 1.8 });
 
     return {
@@ -91,7 +97,11 @@ async function cargarProductos(proveedorIds: number[]) {
   });
   await db.insert(productos).values(filas);
   return db
-    .select({ id: productos.id, precio: productos.precio, stockMinimo: productos.stockMinimo })
+    .select({
+      id: productos.id,
+      precio: productos.precio,
+      stockMinimo: productos.stockMinimo,
+    })
     .from(productos);
 }
 
@@ -110,8 +120,13 @@ async function cargarClientes() {
       nombre,
       tipo,
       telefono: faker.phone.number(),
-      email: faker.datatype.boolean(0.6) ? faker.internet.email().toLowerCase() : null,
-      cuit: tipo === "particular" ? null : `30-${faker.string.numeric(8)}-${faker.string.numeric(1)}`,
+      email: faker.datatype.boolean(0.6)
+        ? faker.internet.email().toLowerCase()
+        : null,
+      cuit:
+        tipo === "particular"
+          ? null
+          : `30-${faker.string.numeric(8)}-${faker.string.numeric(1)}`,
       direccion: faker.location.streetAddress(),
     };
   });
@@ -143,25 +158,38 @@ async function cargarVentas(catalogo: Producto[], clienteIds: number[]) {
 
   for (let dia = new Date(inicio); dia <= hoy; dia.setDate(dia.getDate() + 1)) {
     if (dia.getDay() === 0) continue; // domingo cerrado
-    const ventasDelDia = faker.number.int({ min: 2, max: dia.getDay() === 6 ? 6 : 10 });
+    const ventasDelDia = faker.number.int({
+      min: 2,
+      max: dia.getDay() === 6 ? 6 : 10,
+    });
 
     for (let i = 0; i < ventasDelDia; i++) {
       const fecha = new Date(dia);
-      fecha.setHours(faker.number.int({ min: 8, max: 19 }), faker.number.int({ min: 0, max: 59 }));
+      fecha.setHours(
+        faker.number.int({ min: 8, max: 19 }),
+        faker.number.int({ min: 0, max: 59 }),
+      );
       const items = armarItems(catalogo);
-      const total = items.reduce((suma, item) => suma + Number(item.subtotal), 0);
+      const total = items.reduce(
+        (suma, item) => suma + Number(item.subtotal),
+        0,
+      );
 
       const [venta] = await db
         .insert(ventas)
         .values({
-          clienteId: faker.datatype.boolean(0.55) ? faker.helpers.arrayElement(clienteIds) : null,
+          clienteId: faker.datatype.boolean(0.55)
+            ? faker.helpers.arrayElement(clienteIds)
+            : null,
           fecha,
           medioPago: faker.helpers.arrayElement(mediosDePago),
           total: pesos(total),
         })
         .$returningId();
 
-      await db.insert(ventaItems).values(items.map((item) => ({ ...item, ventaId: venta.id })));
+      await db
+        .insert(ventaItems)
+        .values(items.map((item) => ({ ...item, ventaId: venta.id })));
       await db.insert(movimientosStock).values(
         items.map((item) => ({
           productoId: item.productoId,
@@ -172,14 +200,21 @@ async function cargarVentas(catalogo: Producto[], clienteIds: number[]) {
         })),
       );
       for (const item of items) {
-        vendidos.set(item.productoId, (vendidos.get(item.productoId) ?? 0) + item.cantidad);
+        vendidos.set(
+          item.productoId,
+          (vendidos.get(item.productoId) ?? 0) + item.cantidad,
+        );
       }
     }
   }
   return { vendidos, inicio };
 }
 
-async function cargarStock(catalogo: Producto[], vendidos: Map<number, number>, inicio: Date) {
+async function cargarStock(
+  catalogo: Producto[],
+  vendidos: Map<number, number>,
+  inicio: Date,
+) {
   for (const p of catalogo) {
     // Algunos productos quedan por debajo del mínimo para que se vean las alertas.
     const stockFinal = faker.datatype.boolean(0.15)
@@ -194,7 +229,10 @@ async function cargarStock(catalogo: Producto[], vendidos: Map<number, number>, 
       motivo: "Stock inicial",
       fecha: inicio,
     });
-    await db.update(productos).set({ stock: stockFinal }).where(sql`${productos.id} = ${p.id}`);
+    await db
+      .update(productos)
+      .set({ stock: stockFinal })
+      .where(sql`${productos.id} = ${p.id}`);
   }
 }
 
@@ -212,22 +250,31 @@ async function cargarPresupuestos(catalogo: Producto[], clienteIds: number[]) {
         clienteId: faker.helpers.arrayElement(clienteIds),
         fecha,
         validoHasta: validoHasta.toISOString().slice(0, 10),
-        estado: validoHasta < new Date()
-          ? faker.helpers.arrayElement(["aceptado", "rechazado", "vencido"] as const)
-          : "pendiente",
+        estado:
+          validoHasta < new Date()
+            ? faker.helpers.arrayElement([
+                "aceptado",
+                "rechazado",
+                "vencido",
+              ] as const)
+            : "pendiente",
         total: pesos(total),
       })
       .$returningId();
 
     await db
       .insert(presupuestoItems)
-      .values(items.map((item) => ({ ...item, presupuestoId: presupuesto.id })));
+      .values(
+        items.map((item) => ({ ...item, presupuestoId: presupuesto.id })),
+      );
   }
 }
 
 async function main() {
   if (process.env.NODE_ENV === "production") {
-    throw new Error("El seed borra todos los datos: no se puede correr en producción.");
+    throw new Error(
+      "El seed borra todos los datos: no se puede correr en producción.",
+    );
   }
 
   console.log("Limpiando tablas...");

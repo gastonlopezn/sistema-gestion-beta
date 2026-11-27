@@ -24,12 +24,17 @@ export const productos = mysqlTable(
       onDelete: "set null",
     }),
     costo: decimal("costo", { precision: 12, scale: 2 }).notNull().default("0"),
-    precio: decimal("precio", { precision: 12, scale: 2 }).notNull().default("0"),
+    precio: decimal("precio", { precision: 12, scale: 2 })
+      .notNull()
+      .default("0"),
     stock: int("stock").notNull().default(0),
     stockMinimo: int("stock_minimo").notNull().default(0),
     activo: boolean("activo").notNull().default(true),
     creadoEn: timestamp("creado_en").notNull().defaultNow(),
-    actualizadoEn: timestamp("actualizado_en").notNull().defaultNow().onUpdateNow(),
+    actualizadoEn: timestamp("actualizado_en")
+      .notNull()
+      .defaultNow()
+      .onUpdateNow(),
   },
   (t) => [
     index("productos_descripcion_idx").on(t.descripcion),
