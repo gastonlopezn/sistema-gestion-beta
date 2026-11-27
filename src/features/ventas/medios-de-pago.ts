@@ -1,5 +1,6 @@
-import { mediosDePago } from "@/db/schema/ventas";
+import type { mediosDePago } from "@/db/schema/ventas";
 
+// Solo importa tipos del esquema, así se puede usar en componentes de cliente sin sumar Drizzle al bundle.
 export type MedioDePago = (typeof mediosDePago)[number];
 
 export const nombresMedioDePago: Record<MedioDePago, string> = {
@@ -10,6 +11,11 @@ export const nombresMedioDePago: Record<MedioDePago, string> = {
   mercado_pago: "Mercado Pago",
 };
 
+export const opcionesMedioDePago = Object.entries(nombresMedioDePago) as [
+  MedioDePago,
+  string,
+][];
+
 export function esMedioDePago(valor: unknown): valor is MedioDePago {
-  return mediosDePago.includes(valor as MedioDePago);
+  return typeof valor === "string" && Object.hasOwn(nombresMedioDePago, valor);
 }

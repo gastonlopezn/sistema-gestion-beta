@@ -2,9 +2,8 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { mediosDePago } from "@/db/schema/ventas";
 
-import { nombresMedioDePago } from "../medios-de-pago";
+import { opcionesMedioDePago } from "../medios-de-pago";
 import type { FiltrosVentas as Filtros } from "../queries";
 
 // Formulario GET, igual que en stock: los filtros quedan en la URL.
@@ -48,9 +47,9 @@ export function FiltrosVentas({
           className={claseSelect}
         >
           <option value="">Todos</option>
-          {mediosDePago.map((medio) => (
+          {opcionesMedioDePago.map(([medio, nombre]) => (
             <option key={medio} value={medio}>
-              {nombresMedioDePago[medio]}
+              {nombre}
             </option>
           ))}
         </select>

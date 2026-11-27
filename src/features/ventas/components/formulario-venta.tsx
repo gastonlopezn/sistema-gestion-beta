@@ -7,11 +7,10 @@ import { useActionState, useEffect, useState, useTransition } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { mediosDePago } from "@/db/schema/ventas";
 import { formatearPesos } from "@/lib/formato";
 
 import { buscarProductos, registrarVenta } from "../actions";
-import { nombresMedioDePago } from "../medios-de-pago";
+import { opcionesMedioDePago } from "../medios-de-pago";
 import type { ProductoParaVenta } from "../queries";
 
 type Linea = ProductoParaVenta & { cantidad: number };
@@ -225,9 +224,9 @@ export function FormularioVenta({
             defaultValue="efectivo"
             className={claseSelect}
           >
-            {mediosDePago.map((medio) => (
+            {opcionesMedioDePago.map(([medio, nombre]) => (
               <option key={medio} value={medio}>
-                {nombresMedioDePago[medio]}
+                {nombre}
               </option>
             ))}
           </select>
