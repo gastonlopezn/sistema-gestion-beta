@@ -1,2 +1,141 @@
 # sistema-gestion-beta
-Sistema web de gestión para PyMEs.
+
+Sitio web y sistema de gestión para **SM Repuestos**.
+
+El proyecto tiene dos partes que viven en la misma aplicación:
+
+1. **Landing pública** (`/`): para que los clientes conozcan el negocio, lo contacten y lo ubiquen en la ciudad.
+2. **Sistema de gestión** (`/panel`): stock, historial de ventas, presupuestos y estadísticas.
+
+> Estado: **Fase 0, demo**. Por ahora el repo tiene solo la estructura base; las funcionalidades se definen con el cliente.
+
+## Stack
+
+| Capa | Tecnología |
+| --- | --- |
+| Framework | [Next.js](https://nextjs.org) (App Router) + TypeScript |
+| Estilos | Tailwind CSS (+ shadcn/ui más adelante) |
+| Base de datos | MySQL 8 (Docker en local) |
+| ORM | Drizzle ORM (se agrega en la issue de base de datos) |
+| Calidad | ESLint, Prettier, GitHub Actions |
+| Hosting | Vercel (app) + MySQL administrado (Aiven o Railway) |
+
+## Requisitos
+
+- Node.js 22 o superior
+- Docker (para la base MySQL local)
+
+## Cómo levantarlo en local
+
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Variables de entorno
+cp .env.example .env
+
+# 3. Base de datos MySQL
+docker compose up -d
+
+# 4. Servidor de desarrollo
+npm run dev
+```
+
+La app queda en http://localhost:3000.
+
+## Scripts
+
+| Script | Qué hace |
+| --- | --- |
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Build de producción |
+| `npm run start` | Sirve el build de producción |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | Chequeo de tipos de TypeScript |
+| `npm run format` | Formatea el código con Prettier |
+| `npm run format:check` | Verifica el formato sin modificar archivos |
+
+## Estructura de carpetas
+
+```
+.
+├── .github/
+│   ├── workflows/ci.yml          # Lint, typecheck y build en cada PR
+│   └── pull_request_template.md
+├── docs/                         # Planificación, decisiones y notas de reuniones
+├── public/
+│   └── images/                   # Logo, fotos del local y de productos
+├── src/
+│   ├── app/                      # Rutas (App Router)
+│   │   ├── (landing)/            # Landing pública
+│   │   ├── (panel)/panel/        # Sistema de gestión (requiere login)
+│   │   └── api/                  # Endpoints
+│   ├── components/
+│   │   ├── ui/                   # Componentes base reutilizables
+│   │   ├── landing/              # Secciones de la landing
+│   │   └── panel/                # Componentes del panel
+│   ├── features/                 # Lógica por módulo de negocio
+│   │   ├── auth/
+│   │   ├── stock/
+│   │   ├── ventas/
+│   │   ├── presupuestos/
+│   │   ├── clientes/
+│   │   └── estadisticas/
+│   ├── db/
+│   │   ├── migrations/           # Migraciones generadas
+│   │   └── seed/                 # Datos de prueba para la demo
+│   ├── lib/                      # Utilidades (moneda, fechas, etc.)
+│   ├── hooks/                    # Hooks de React compartidos
+│   ├── types/                    # Tipos compartidos
+│   └── config/                   # Datos del negocio (dirección, horarios, WhatsApp)
+├── tests/
+│   ├── unit/
+│   └── e2e/
+├── docker-compose.yml            # MySQL local
+└── .env.example
+```
+
+**Criterio:** `app/` solo arma rutas y páginas; la lógica de cada módulo vive en `features/<modulo>/` y los componentes visuales en `components/`. Así cada módulo crece sin mezclarse con los demás.
+
+## Flujo de trabajo
+
+Usamos dos ramas permanentes y una rama corta por cada cambio:
+
+| Rama | Para qué |
+| --- | --- |
+| `main` | Producción. Solo recibe merges desde `develop` cuando todo funciona. |
+| `develop` | Integración. Acá se juntan todos los cambios y se prueban antes de pasar a `main`. |
+| `feat/...`, `fix/...`, `chore/...`, `docs/...` | Una rama por feature o cambio. Se borra al mergearse a `develop`. |
+
+1. Cada tarea es una issue en el tablero de GitHub Projects.
+2. Se crea la rama **desde `develop`** con prefijo y número de issue:
+   - `feat/12-alta-de-productos`
+   - `fix/18-stock-negativo`
+   - `chore/3-config-ci`
+   - `docs/5-readme`
+3. Commits chicos con [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/), por ejemplo `feat(stock): alerta de stock mínimo`.
+4. Se abre un pull request **hacia `develop`** con `Closes #N` en la descripción.
+5. CI tiene que pasar en verde y Vercel genera una preview para revisar.
+6. Merge con **squash** a `develop`; la rama del cambio se borra.
+7. Cuando `develop` está estable y probada, se abre un PR de `develop` a `main` (merge commit, sin squash) y se despliega a producción.
+
+```bash
+git switch develop && git pull
+git switch -c feat/12-alta-de-productos
+# ...commits...
+git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
+```
+
+`main` y `develop` están protegidas: no se hace push directo.
+
+## Variables de entorno
+
+| Variable | Descripción |
+| --- | --- |
+| `DATABASE_URL` | Conexión a MySQL. En local coincide con `docker-compose.yml`. |
+
+Nunca subir `.env` al repo; en producción las variables se cargan en Vercel.
+
+## Deploy
+
+`main` se despliega a producción y `develop` y cada PR tienen su preview en Vercel. Ver [docs/deploy.md](./docs/deploy.md).
