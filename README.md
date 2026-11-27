@@ -17,6 +17,7 @@ El proyecto tiene dos partes que viven en la misma aplicación:
 | Estilos | Tailwind CSS (+ shadcn/ui más adelante) |
 | Base de datos | MySQL 8 (Docker en local) |
 | ORM | Drizzle ORM con driver `mysql2` |
+| Login | Better Auth (email y contraseña, sesiones en MySQL) |
 | Calidad | ESLint, Prettier, GitHub Actions |
 | Hosting | Vercel (app) + MySQL administrado (Aiven o Railway) |
 
@@ -138,6 +139,13 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
 
 `main` y `develop` están protegidas: no se hace push directo.
 
+## Panel de gestión y login
+
+- `/login`: ingreso con email y contraseña. No hay registro público; los usuarios los crea el administrador.
+- `/panel`: protegido. `src/proxy.ts` redirige al login si no hay cookie de sesión y el servidor valida la sesión con `requerirSesion()` (`src/lib/sesion.ts`).
+- Cada usuario tiene un rol: `admin` o `vendedor`.
+- `npm run db:seed` crea un usuario de demo (`demo@smrepuestos.com.ar`); su contraseña está en `src/db/seed/usuarios.ts` o en `DEMO_PASSWORD`.
+
 ## Base de datos
 
 El esquema vive en `src/db/schema/`, con una tabla por archivo:
@@ -150,6 +158,7 @@ El esquema vive en `src/db/schema/`, con una tabla por archivo:
 | `ventas` / `venta_items` | Cada venta y sus productos, con el precio del momento |
 | `presupuestos` / `presupuesto_items` | Presupuestos y su estado; se pueden convertir en venta |
 | `movimientos_stock` | Cada entrada y salida de stock, para auditar |
+| `user` / `session` / `account` / `verification` | Usuarios y sesiones de Better Auth |
 
 Para cambiar el esquema: editar el archivo de la tabla, correr `npm run db:generate`, revisar el SQL generado en `src/db/migrations/` y commitearlo junto con el cambio.
 
@@ -160,6 +169,9 @@ El seed genera siempre los mismos datos: 200 repuestos, 60 clientes, 8 proveedor
 | Variable | Descripción |
 | --- | --- |
 | `DATABASE_URL` | Conexión a MySQL. En local coincide con `docker-compose.yml`. |
+| `BETTER_AUTH_SECRET` | Secreto para firmar sesiones. Generarlo con `openssl rand -base64 32`. |
+| `BETTER_AUTH_URL` | URL pública de la app (`http://localhost:3000` en local). |
+| `DEMO_PASSWORD` | Opcional: contraseña del usuario de demo que crea el seed. |
 
 Nunca subir `.env` al repo; en producción las variables se cargan en Vercel.
 
