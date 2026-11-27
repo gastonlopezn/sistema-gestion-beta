@@ -43,12 +43,14 @@ export function Contacto() {
             <li key={titulo}>
               <a
                 href={href}
-                {...(externo ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="flex items-center gap-4 border-l-4 border-marca-rojo bg-neutral-50 p-5 shadow-sm transition hover:bg-neutral-100"
+                {...(externo
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+                className="border-marca-rojo flex items-center gap-4 border-l-4 bg-neutral-50 p-5 shadow-sm transition hover:bg-neutral-100"
               >
-                <Icono className="size-8 shrink-0 text-marca-azul" />
+                <Icono className="text-marca-azul size-8 shrink-0" />
                 <span>
-                  <span className="block font-heading text-xl font-bold text-marca-azul uppercase italic">
+                  <span className="font-heading text-marca-azul block text-xl font-bold uppercase italic">
                     {titulo}
                   </span>
                   <span className="text-neutral-700">{valor}</span>

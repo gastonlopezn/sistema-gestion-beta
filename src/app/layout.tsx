@@ -27,11 +27,19 @@ export const metadata: Metadata = {
   },
   description:
     "Repuestos originales y alternativos para Ford y Chevrolet en Río Cuarto, Córdoba. Av. Sabattini 1999. Envíos a todo el país y 3 cuotas sin interés.",
-  keywords: ["repuestos", "Ford", "Chevrolet", "Río Cuarto", "autopartes", "Sarmiento Repuestos"],
+  keywords: [
+    "repuestos",
+    "Ford",
+    "Chevrolet",
+    "Río Cuarto",
+    "autopartes",
+    "Sarmiento Repuestos",
+  ],
   icons: { icon: "/images/logo-sm-repuestos.png" },
   openGraph: {
     title: "SM Repuestos | Repuestos Ford y Chevrolet en Río Cuarto",
-    description: "Repuestos originales y alternativos para Ford y Chevrolet. Av. Sabattini 1999, Río Cuarto.",
+    description:
+      "Repuestos originales y alternativos para Ford y Chevrolet. Av. Sabattini 1999, Río Cuarto.",
     locale: "es_AR",
     type: "website",
     images: ["/images/logo-sm-repuestos.png"],
@@ -44,7 +52,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es-AR"
       className={`${geistSans.variable} ${geistMono.variable} ${barlowCondensed.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

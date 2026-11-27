@@ -34,11 +34,41 @@ export const negocio = {
 
 // Días en orden de lunes a domingo. Cada turno es [apertura, cierre] en formato 24 h.
 export const horarios = [
-  { dia: "Lunes", turnos: [["08:00", "12:30"], ["15:00", "19:00"]] },
-  { dia: "Martes", turnos: [["08:00", "12:30"], ["15:00", "19:00"]] },
-  { dia: "Miércoles", turnos: [["08:00", "12:30"], ["15:00", "19:00"]] },
-  { dia: "Jueves", turnos: [["08:00", "12:30"], ["15:00", "19:00"]] },
-  { dia: "Viernes", turnos: [["08:00", "12:30"], ["15:00", "19:00"]] },
+  {
+    dia: "Lunes",
+    turnos: [
+      ["08:00", "12:30"],
+      ["15:00", "19:00"],
+    ],
+  },
+  {
+    dia: "Martes",
+    turnos: [
+      ["08:00", "12:30"],
+      ["15:00", "19:00"],
+    ],
+  },
+  {
+    dia: "Miércoles",
+    turnos: [
+      ["08:00", "12:30"],
+      ["15:00", "19:00"],
+    ],
+  },
+  {
+    dia: "Jueves",
+    turnos: [
+      ["08:00", "12:30"],
+      ["15:00", "19:00"],
+    ],
+  },
+  {
+    dia: "Viernes",
+    turnos: [
+      ["08:00", "12:30"],
+      ["15:00", "19:00"],
+    ],
+  },
   { dia: "Sábado", turnos: [["08:00", "12:00"]] },
   { dia: "Domingo", turnos: [] },
 ] as const;

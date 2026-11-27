@@ -1,6 +1,14 @@
 import { horarios, negocio } from "@/config/negocio";
 
-const diasEnIngles = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const diasEnIngles = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 // Datos estructurados (schema.org) para que Google muestre dirección, horarios y teléfono.
 export function DatosEstructurados() {

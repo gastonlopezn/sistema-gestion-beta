@@ -25,8 +25,10 @@ export function Ubicacion() {
           <div id="horarios" className="flex scroll-mt-20 flex-col gap-6">
             <div className="bg-marca-azul p-6 text-white shadow-sm">
               <div className="flex items-center gap-2">
-                <MapPin className="size-6 text-marca-rojo" />
-                <h3 className="font-heading text-2xl font-bold uppercase italic">Dirección</h3>
+                <MapPin className="text-marca-rojo size-6" />
+                <h3 className="font-heading text-2xl font-bold uppercase italic">
+                  Dirección
+                </h3>
               </div>
               <p className="mt-3 text-lg">{negocio.direccion.calle}</p>
               <p className="text-white/75">
@@ -36,7 +38,10 @@ export function Ubicacion() {
                 href={urlMapa}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(buttonVariants({ size: "lg" }), "mt-4 rounded-full px-5")}
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "mt-4 rounded-full px-5",
+                )}
               >
                 <Navigation className="size-4" />
                 Cómo llegar

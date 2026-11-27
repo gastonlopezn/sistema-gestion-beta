@@ -18,7 +18,7 @@ export function TituloSeccion({
       )}
     >
       {children}
-      <span className="mt-2 block h-1.5 w-20 -skew-x-12 bg-marca-rojo" />
+      <span className="bg-marca-rojo mt-2 block h-1.5 w-20 -skew-x-12" />
     </h2>
   );
 }

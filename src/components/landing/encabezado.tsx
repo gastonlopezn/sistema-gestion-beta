@@ -17,7 +17,11 @@ export function Encabezado() {
   return (
     <header className="sticky top-0 z-40 border-b bg-white/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <a href="#inicio" className="flex items-center" aria-label={negocio.nombre}>
+        <a
+          href="#inicio"
+          className="flex items-center"
+          aria-label={negocio.nombre}
+        >
           <Image
             src="/images/logo-sm-repuestos.png"
             alt={negocio.nombre}
@@ -26,9 +30,13 @@ export function Encabezado() {
             priority
           />
         </a>
-        <nav className="hidden gap-6 font-heading text-lg font-bold text-marca-azul uppercase italic sm:flex">
+        <nav className="font-heading text-marca-azul hidden gap-6 text-lg font-bold uppercase italic sm:flex">
           {enlaces.map((enlace) => (
-            <a key={enlace.href} href={enlace.href} className="hover:text-marca-rojo">
+            <a
+              key={enlace.href}
+              href={enlace.href}
+              className="hover:text-marca-rojo"
+            >
               {enlace.texto}
             </a>
           ))}
