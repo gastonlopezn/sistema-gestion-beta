@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils";
 
-export function EstadoStock({ stock, stockMinimo }: { stock: number; stockMinimo: number }) {
+export function EstadoStock({
+  stock,
+  stockMinimo,
+}: {
+  stock: number;
+  stockMinimo: number;
+}) {
   const estado =
     stock === 0
       ? { texto: "Sin stock", clase: "bg-red-100 text-red-700" }
@@ -9,7 +15,12 @@ export function EstadoStock({ stock, stockMinimo }: { stock: number; stockMinimo
         : { texto: "OK", clase: "bg-emerald-100 text-emerald-700" };
 
   return (
-    <span className={cn("rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap", estado.clase)}>
+    <span
+      className={cn(
+        "rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap",
+        estado.clase,
+      )}
+    >
       {estado.texto}
     </span>
   );
