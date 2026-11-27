@@ -75,15 +75,13 @@ export default async function DetalleVentaPage({
           </tbody>
           <tfoot>
             <tr className="border-t">
-              <td
-                colSpan={2}
-                className="px-6 py-4 text-right font-medium sm:col-span-3"
-              >
-                Total
-              </td>
-              <td className="hidden sm:table-cell" />
-              <td className="px-6 py-4 text-right text-lg font-semibold">
-                {formatearPesos(venta.total)}
+              <td colSpan={4} className="px-6 py-4">
+                <div className="flex items-baseline justify-end gap-6">
+                  <span className="text-muted-foreground text-sm">Total</span>
+                  <span className="text-lg font-semibold">
+                    {formatearPesos(venta.total)}
+                  </span>
+                </div>
               </td>
             </tr>
           </tfoot>
