@@ -99,20 +99,34 @@ La app queda en http://localhost:3000.
 
 ## Flujo de trabajo
 
-Usamos **GitHub Flow**:
+Usamos dos ramas permanentes y una rama corta por cada cambio:
+
+| Rama | Para qué |
+| --- | --- |
+| `main` | Producción. Solo recibe merges desde `develop` cuando todo funciona. |
+| `develop` | Integración. Acá se juntan todos los cambios y se prueban antes de pasar a `main`. |
+| `feat/...`, `fix/...`, `chore/...`, `docs/...` | Una rama por feature o cambio. Se borra al mergearse a `develop`. |
 
 1. Cada tarea es una issue en el tablero de GitHub Projects.
-2. Se crea una rama desde `main` con prefijo y número de issue:
+2. Se crea la rama **desde `develop`** con prefijo y número de issue:
    - `feat/12-alta-de-productos`
    - `fix/18-stock-negativo`
    - `chore/3-config-ci`
    - `docs/5-readme`
 3. Commits chicos con [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/), por ejemplo `feat(stock): alerta de stock mínimo`.
-4. Se abre un pull request hacia `main` con `Closes #N` en la descripción.
+4. Se abre un pull request **hacia `develop`** con `Closes #N` en la descripción.
 5. CI tiene que pasar en verde y Vercel genera una preview para revisar.
-6. Merge con **squash** a `main`, que se despliega a producción.
+6. Merge con **squash** a `develop`; la rama del cambio se borra.
+7. Cuando `develop` está estable y probada, se abre un PR de `develop` a `main` (merge commit, sin squash) y se despliega a producción.
 
-`main` está protegida: no se hace push directo.
+```bash
+git switch develop && git pull
+git switch -c feat/12-alta-de-productos
+# ...commits...
+git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
+```
+
+`main` y `develop` están protegidas: no se hace push directo.
 
 ## Variables de entorno
 
