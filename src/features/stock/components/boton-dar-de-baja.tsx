@@ -22,7 +22,11 @@ export function BotonDarDeBaja({ accion }: { accion: () => Promise<void> }) {
   return (
     <div className="flex items-center gap-2 text-sm">
       <span>¿Seguro? Deja de aparecer en el stock.</span>
-      <Button variant="destructive" disabled={pendiente} onClick={() => iniciar(() => accion())}>
+      <Button
+        variant="destructive"
+        disabled={pendiente}
+        onClick={() => iniciar(() => accion())}
+      >
         {pendiente ? "Dando de baja..." : "Sí, dar de baja"}
       </Button>
       <Button variant="ghost" onClick={() => setConfirmando(false)}>

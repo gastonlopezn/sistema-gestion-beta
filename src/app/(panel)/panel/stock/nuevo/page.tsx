@@ -6,11 +6,17 @@ import { requerirSesion } from "@/lib/sesion";
 
 export default async function NuevoProductoPage() {
   await requerirSesion();
-  const [proveedores, rubros] = await Promise.all([listarProveedores(), listarRubros()]);
+  const [proveedores, rubros] = await Promise.all([
+    listarProveedores(),
+    listarRubros(),
+  ]);
 
   return (
     <>
-      <EncabezadoPagina titulo="Nuevo producto" descripcion="Cargá un repuesto al stock" />
+      <EncabezadoPagina
+        titulo="Nuevo producto"
+        descripcion="Cargá un repuesto al stock"
+      />
       <FormularioProducto
         accion={crearProducto}
         proveedores={proveedores}

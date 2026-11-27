@@ -23,17 +23,27 @@ type Valores = {
 };
 
 type Props = {
-  accion: (estado: EstadoFormulario, formData: FormData) => Promise<EstadoFormulario>;
+  accion: (
+    estado: EstadoFormulario,
+    formData: FormData,
+  ) => Promise<EstadoFormulario>;
   inicial?: Valores;
   proveedores: { id: number; nombre: string }[];
   rubros: string[];
   textoBoton: string;
 };
 
-export function FormularioProducto({ accion, inicial = {}, proveedores, rubros, textoBoton }: Props) {
+export function FormularioProducto({
+  accion,
+  inicial = {},
+  proveedores,
+  rubros,
+  textoBoton,
+}: Props) {
   const [estado, enviar, enviando] = useActionState(accion, {});
   const valor = (campo: keyof Valores) =>
-    estado.valores?.[campo] ?? (inicial[campo] == null ? "" : String(inicial[campo]));
+    estado.valores?.[campo] ??
+    (inicial[campo] == null ? "" : String(inicial[campo]));
 
   const campo = (
     nombre: keyof Valores,
@@ -50,19 +60,30 @@ export function FormularioProducto({ accion, inicial = {}, proveedores, rubros, 
         {...props}
       />
       {estado.errores?.[nombre] && (
-        <p className="text-xs text-destructive">{estado.errores[nombre]}</p>
+        <p className="text-destructive text-xs">{estado.errores[nombre]}</p>
       )}
     </div>
   );
 
   return (
-    <form action={enviar} className="grid max-w-3xl gap-5 bg-white p-6 shadow-sm sm:grid-cols-2">
+    <form
+      action={enviar}
+      className="grid max-w-3xl gap-5 bg-white p-6 shadow-sm sm:grid-cols-2"
+    >
       {campo("codigo", "Código", { required: true, placeholder: "FIL-12345" })}
-      {campo("descripcion", "Descripción", { required: true, placeholder: "Filtro de aceite Fram" })}
+      {campo("descripcion", "Descripción", {
+        required: true,
+        placeholder: "Filtro de aceite Fram",
+      })}
       {campo("marca", "Marca")}
       <div className="flex flex-col gap-2">
         <Label htmlFor="rubro">Rubro</Label>
-        <Input id="rubro" name="rubro" list="rubros" defaultValue={valor("rubro")} />
+        <Input
+          id="rubro"
+          name="rubro"
+          list="rubros"
+          defaultValue={valor("rubro")}
+        />
         <datalist id="rubros">
           {rubros.map((r) => (
             <option key={r} value={r} />
@@ -70,7 +91,9 @@ export function FormularioProducto({ accion, inicial = {}, proveedores, rubros, 
         </datalist>
       </div>
       <div className="sm:col-span-2">
-        {campo("compatibilidad", "Compatibilidad", { placeholder: "Ford Ranger 3.2 2012-2023" })}
+        {campo("compatibilidad", "Compatibilidad", {
+          placeholder: "Ford Ranger 3.2 2012-2023",
+        })}
       </div>
       <div className="flex flex-col gap-2 sm:col-span-2">
         <Label htmlFor="proveedorId">Proveedor</Label>
@@ -78,7 +101,7 @@ export function FormularioProducto({ accion, inicial = {}, proveedores, rubros, 
           id="proveedorId"
           name="proveedorId"
           defaultValue={valor("proveedorId") || "0"}
-          className="h-9 rounded-lg border border-input bg-transparent px-3 text-sm"
+          className="border-input h-9 rounded-lg border bg-transparent px-3 text-sm"
         >
           <option value="0">Sin proveedor</option>
           {proveedores.map((p) => (
@@ -88,18 +111,43 @@ export function FormularioProducto({ accion, inicial = {}, proveedores, rubros, 
           ))}
         </select>
       </div>
-      {campo("costo", "Costo ($)", { type: "number", min: 0, step: "0.01", required: true })}
-      {campo("precio", "Precio de venta ($)", { type: "number", min: 0, step: "0.01", required: true })}
-      {campo("stock", "Stock actual", { type: "number", min: 0, step: 1, required: true })}
-      {campo("stockMinimo", "Stock mínimo", { type: "number", min: 0, step: 1, required: true })}
+      {campo("costo", "Costo ($)", {
+        type: "number",
+        min: 0,
+        step: "0.01",
+        required: true,
+      })}
+      {campo("precio", "Precio de venta ($)", {
+        type: "number",
+        min: 0,
+        step: "0.01",
+        required: true,
+      })}
+      {campo("stock", "Stock actual", {
+        type: "number",
+        min: 0,
+        step: 1,
+        required: true,
+      })}
+      {campo("stockMinimo", "Stock mínimo", {
+        type: "number",
+        min: 0,
+        step: 1,
+        required: true,
+      })}
       {estado.errores?.general && (
-        <p className="text-sm text-destructive sm:col-span-2">{estado.errores.general}</p>
+        <p className="text-destructive text-sm sm:col-span-2">
+          {estado.errores.general}
+        </p>
       )}
       <div className="flex gap-3 sm:col-span-2">
         <Button type="submit" size="lg" disabled={enviando}>
           {enviando ? "Guardando..." : textoBoton}
         </Button>
-        <Link href="/panel/stock" className={buttonVariants({ variant: "outline", size: "lg" })}>
+        <Link
+          href="/panel/stock"
+          className={buttonVariants({ variant: "outline", size: "lg" })}
+        >
           Cancelar
         </Link>
       </div>

@@ -1,14 +1,23 @@
 import { notFound } from "next/navigation";
 
 import { EncabezadoPagina } from "@/components/panel/encabezado-pagina";
-import { actualizarProducto, darDeBajaProducto } from "@/features/stock/actions";
+import {
+  actualizarProducto,
+  darDeBajaProducto,
+} from "@/features/stock/actions";
 import { BotonDarDeBaja } from "@/features/stock/components/boton-dar-de-baja";
 import { EstadoStock } from "@/features/stock/components/estado-stock";
 import { FormularioProducto } from "@/features/stock/components/formulario-producto";
-import { listarProveedores, listarRubros, obtenerProducto } from "@/features/stock/queries";
+import {
+  listarProveedores,
+  listarRubros,
+  obtenerProducto,
+} from "@/features/stock/queries";
 import { requerirSesion } from "@/lib/sesion";
 
-export default async function EditarProductoPage({ params }: PageProps<"/panel/stock/[id]">) {
+export default async function EditarProductoPage({
+  params,
+}: PageProps<"/panel/stock/[id]">) {
   await requerirSesion();
   const id = Number((await params).id);
   if (!Number.isInteger(id)) notFound();
@@ -23,8 +32,14 @@ export default async function EditarProductoPage({ params }: PageProps<"/panel/s
   return (
     <>
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <EncabezadoPagina titulo={producto.descripcion} descripcion={`Código ${producto.codigo}`} />
-        <EstadoStock stock={producto.stock} stockMinimo={producto.stockMinimo} />
+        <EncabezadoPagina
+          titulo={producto.descripcion}
+          descripcion={`Código ${producto.codigo}`}
+        />
+        <EstadoStock
+          stock={producto.stock}
+          stockMinimo={producto.stockMinimo}
+        />
       </div>
       <FormularioProducto
         accion={actualizarProducto.bind(null, producto.id)}
