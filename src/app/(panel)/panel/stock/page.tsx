@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Percent, Plus } from "lucide-react";
 import Link from "next/link";
 
 import { EncabezadoPagina } from "@/components/panel/encabezado-pagina";
@@ -37,13 +37,22 @@ export default async function StockPage({
           titulo="Stock"
           descripcion="Productos, búsqueda y alertas de stock mínimo"
         />
-        <Link
-          href="/panel/stock/nuevo"
-          className={buttonVariants({ size: "lg" })}
-        >
-          <Plus />
-          Nuevo producto
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/panel/stock/precios"
+            className={buttonVariants({ variant: "outline", size: "lg" })}
+          >
+            <Percent />
+            Actualizar precios
+          </Link>
+          <Link
+            href="/panel/stock/nuevo"
+            className={buttonVariants({ size: "lg" })}
+          >
+            <Plus />
+            Nuevo producto
+          </Link>
+        </div>
       </div>
       <ResumenStock />
       <FiltrosStock filtros={filtros} rubros={rubros} />
