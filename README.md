@@ -152,6 +152,13 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
 - `/panel/stock/nuevo` y `/panel/stock/[id]`: alta y edición de productos. Los productos no se borran: se dan de baja y dejan de aparecer.
 - Cada cambio de stock queda registrado en `movimientos_stock` (ingreso inicial al crear, ajuste al editar).
 
+### Ventas
+
+- `/panel/ventas`: historial paginado con filtros por fecha (en hora de Argentina), medio de pago y cliente, y un resumen del período (cantidad, facturado y ticket promedio).
+- `/panel/ventas/nueva`: buscador de productos con stock, carrito, cliente (o consumidor final), medio de pago y notas. Enter agrega el primer resultado.
+- Al registrar, en una sola transacción se bloquean los productos, se valida el stock, se guarda la venta con los precios de la base y se descuenta el stock con un movimiento `venta` por producto. Si otra venta se llevó el stock antes, se muestra un aviso y no se guarda nada.
+- `/panel/ventas/[id]`: detalle de la venta.
+
 ## Base de datos
 
 El esquema vive en `src/db/schema/`, con una tabla por archivo:

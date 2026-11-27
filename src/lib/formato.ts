@@ -8,3 +8,13 @@ const pesos = new Intl.NumberFormat("es-AR", {
 export function formatearPesos(valor: string | number) {
   return pesos.format(Number(valor));
 }
+
+const fechaHora = new Intl.DateTimeFormat("es-AR", {
+  dateStyle: "short",
+  timeStyle: "short",
+  timeZone: "America/Argentina/Cordoba",
+});
+
+export function formatearFechaHora(fecha: Date): string {
+  return fechaHora.format(fecha);
+}
