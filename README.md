@@ -159,6 +159,15 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
 - Al registrar, en una sola transacción se bloquean los productos, se valida el stock, se guarda la venta con los precios de la base y se descuenta el stock con un movimiento `venta` por producto. Si otra venta se llevó el stock antes, se muestra un aviso y no se guarda nada.
 - `/panel/ventas/[id]`: detalle de la venta.
 
+### Presupuestos
+
+- `/panel/presupuestos`: listado con filtro por estado. Un presupuesto pendiente cuya fecha de validez ya pasó se muestra como vencido.
+- `/panel/presupuestos/nuevo`: usa el mismo carrito que la venta, con cliente, fecha de validez (15 días por defecto) y notas. Los precios quedan fijos en el presupuesto y no se descuenta stock.
+- `/panel/presupuestos/[id]`: detalle con tres acciones:
+  - **Descargar PDF** (`/panel/presupuestos/[id]/pdf`): se genera en el servidor con `@react-pdf/renderer`, con logo y datos de `src/config/negocio.ts`.
+  - **Enviar por WhatsApp**: abre `wa.me` con el detalle y el total. Si el teléfono del cliente se puede interpretar como número argentino, abre directo su chat; si no, WhatsApp deja elegir el contacto. El PDF no se adjunta solo: wa.me solo acepta texto.
+  - **Convertir en venta** (o marcarlo como rechazado): registra la venta con los precios del presupuesto, descuenta stock y deja el presupuesto como aceptado con el enlace a la venta.
+
 ## Base de datos
 
 El esquema vive en `src/db/schema/`, con una tabla por archivo:
