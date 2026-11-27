@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -8,8 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 
-export function FormularioLogin({ destino }: { destino: string }) {
+export function FormularioLogin() {
   const router = useRouter();
+  const desde = useSearchParams().get("desde");
+  // Solo se permite volver a rutas internas del panel.
+  const destino = desde?.startsWith("/panel") ? desde : "/panel";
   const [error, setError] = useState<string | null>(null);
   const [cargando, setCargando] = useState(false);
 
@@ -37,7 +40,13 @@ export function FormularioLogin({ destino }: { destino: string }) {
     <form onSubmit={ingresar} className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" name="email" type="email" autoComplete="email" required />
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+        />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="password">Contraseña</Label>
@@ -50,7 +59,7 @@ export function FormularioLogin({ destino }: { destino: string }) {
         />
       </div>
       {error && (
-        <p role="alert" className="text-sm text-destructive">
+        <p role="alert" className="text-destructive text-sm">
           {error}
         </p>
       )}
