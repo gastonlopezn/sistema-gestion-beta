@@ -6,7 +6,9 @@ export const presupuestoSchema = z.object({
     .int()
     .min(0)
     .transform((id) => (id === 0 ? null : id)),
-  validoHasta: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Elegí hasta cuándo vale el presupuesto"),
+  validoHasta: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Elegí hasta cuándo vale el presupuesto"),
   notas: z
     .string()
     .trim()
@@ -16,7 +18,10 @@ export const presupuestoSchema = z.object({
     .array(
       z.object({
         productoId: z.number().int().positive(),
-        cantidad: z.number().int().positive("La cantidad tiene que ser mayor a 0"),
+        cantidad: z
+          .number()
+          .int()
+          .positive("La cantidad tiene que ser mayor a 0"),
       }),
     )
     .min(1, "Agregá al menos un producto"),
