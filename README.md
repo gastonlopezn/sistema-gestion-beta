@@ -16,7 +16,7 @@ El proyecto tiene dos partes que viven en la misma aplicación:
 | Framework | [Next.js](https://nextjs.org) (App Router) + TypeScript |
 | Estilos | Tailwind CSS (+ shadcn/ui más adelante) |
 | Base de datos | MySQL 8 (Docker en local) |
-| ORM | Drizzle ORM (se agrega en la issue de base de datos) |
+| ORM | Drizzle ORM con driver `mysql2` |
 | Calidad | ESLint, Prettier, GitHub Actions |
 | Hosting | Vercel (app) + MySQL administrado (Aiven o Railway) |
 
@@ -37,7 +37,11 @@ cp .env.example .env
 # 3. Base de datos MySQL
 docker compose up -d
 
-# 4. Servidor de desarrollo
+# 4. Crear las tablas y cargar datos de prueba
+npm run db:migrate
+npm run db:seed
+
+# 5. Servidor de desarrollo
 npm run dev
 ```
 
@@ -54,6 +58,10 @@ La app queda en http://localhost:3000.
 | `npm run typecheck` | Chequeo de tipos de TypeScript |
 | `npm run format` | Formatea el código con Prettier |
 | `npm run format:check` | Verifica el formato sin modificar archivos |
+| `npm run db:generate` | Genera una migración a partir de cambios en el esquema |
+| `npm run db:migrate` | Aplica las migraciones pendientes |
+| `npm run db:seed` | Borra los datos y carga datos de prueba (nunca en producción) |
+| `npm run db:studio` | Abre Drizzle Studio para ver la base en el navegador |
 
 ## Estructura de carpetas
 
@@ -82,7 +90,9 @@ La app queda en http://localhost:3000.
 │   │   ├── clientes/
 │   │   └── estadisticas/
 │   ├── db/
-│   │   ├── migrations/           # Migraciones generadas
+│   │   ├── index.ts              # Conexión a MySQL
+│   │   ├── schema/               # Una tabla por archivo + relaciones
+│   │   ├── migrations/           # Migraciones generadas por drizzle-kit
 │   │   └── seed/                 # Datos de prueba para la demo
 │   ├── lib/                      # Utilidades (moneda, fechas, etc.)
 │   ├── hooks/                    # Hooks de React compartidos
@@ -127,6 +137,23 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
 ```
 
 `main` y `develop` están protegidas: no se hace push directo.
+
+## Base de datos
+
+El esquema vive en `src/db/schema/`, con una tabla por archivo:
+
+| Tabla | Para qué |
+| --- | --- |
+| `productos` | Catálogo con código, marca, rubro, compatibilidad, costo, precio y stock |
+| `proveedores` | A quién se le compra cada producto |
+| `clientes` | Particulares, talleres y mayoristas |
+| `ventas` / `venta_items` | Cada venta y sus productos, con el precio del momento |
+| `presupuestos` / `presupuesto_items` | Presupuestos y su estado; se pueden convertir en venta |
+| `movimientos_stock` | Cada entrada y salida de stock, para auditar |
+
+Para cambiar el esquema: editar el archivo de la tabla, correr `npm run db:generate`, revisar el SQL generado en `src/db/migrations/` y commitearlo junto con el cambio.
+
+El seed genera siempre los mismos datos: 200 repuestos, 60 clientes, 8 proveedores, 6 meses de ventas y 40 presupuestos, con algunos productos por debajo del stock mínimo.
 
 ## Variables de entorno
 
