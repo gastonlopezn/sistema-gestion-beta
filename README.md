@@ -17,6 +17,7 @@ El proyecto tiene dos partes que viven en la misma aplicación:
 | Estilos | Tailwind CSS (+ shadcn/ui más adelante) |
 | Base de datos | MySQL 8 (Docker en local) |
 | ORM | Drizzle ORM con driver `mysql2` |
+| Login | Better Auth (email y contraseña, sesiones en MySQL) |
 | Calidad | ESLint, Prettier, GitHub Actions |
 | Hosting | Vercel (app) + MySQL administrado (Aiven o Railway) |
 
@@ -62,6 +63,8 @@ La app queda en http://localhost:3000.
 | `npm run db:migrate` | Aplica las migraciones pendientes |
 | `npm run db:seed` | Borra los datos y carga datos de prueba (nunca en producción) |
 | `npm run db:studio` | Abre Drizzle Studio para ver la base en el navegador |
+| `npm run docs:capturas` | Saca las capturas de la presentación (con la app corriendo) |
+| `npm run docs:presentacion` | Genera el PDF de la presentación para el cliente. Ver [docs/presentacion](./docs/presentacion/README.md) |
 
 ## Estructura de carpetas
 
@@ -138,6 +141,44 @@ git push -u origin feat/12-alta-de-productos   # y abrir el PR hacia develop
 
 `main` y `develop` están protegidas: no se hace push directo.
 
+## Panel de gestión y login
+
+- `/login`: ingreso con email y contraseña. No hay registro público; los usuarios los crea el administrador.
+- `/panel`: protegido. `src/proxy.ts` redirige al login si no hay cookie de sesión y el servidor valida la sesión con `requerirSesion()` (`src/lib/sesion.ts`).
+- Cada usuario tiene un rol: `admin` o `vendedor`.
+- `npm run db:seed` crea un usuario de demo (`demo@smrepuestos.com.ar`); su contraseña está en `src/db/seed/usuarios.ts` o en `DEMO_PASSWORD`.
+
+### Stock
+
+- `/panel/stock`: listado paginado con búsqueda por código, descripción, marca o vehículo, filtro por rubro y por productos bajo el stock mínimo.
+- `/panel/stock/nuevo` y `/panel/stock/[id]`: alta y edición de productos. Los productos no se borran: se dan de baja y dejan de aparecer.
+- Cada cambio de stock queda registrado en `movimientos_stock` (ingreso inicial al crear, ajuste al editar).
+- `/panel/stock/precios`: actualización masiva de precios. Filtra por rubro, marca o proveedor, aplica un porcentaje (positivo o negativo) al precio de venta, al costo o a ambos, y redondea el precio de venta hacia arriba a múltiplos de 10, 50 o 100. Primero muestra una vista previa con el precio actual y el nuevo; al confirmar recalcula todo en el servidor en una transacción y lo registra en `actualizaciones_precios` (quién, cuándo, cuánto y a qué productos).
+
+### Ventas
+
+- `/panel/ventas`: historial paginado con filtros por fecha (en hora de Argentina), medio de pago y cliente, y un resumen del período (cantidad, facturado y ticket promedio).
+- `/panel/ventas/nueva`: buscador de productos con stock, carrito, cliente (o consumidor final), medio de pago y notas. Enter agrega el primer resultado.
+- Al registrar, en una sola transacción se bloquean los productos, se valida el stock, se guarda la venta con los precios de la base y se descuenta el stock con un movimiento `venta` por producto. Si otra venta se llevó el stock antes, se muestra un aviso y no se guarda nada.
+- `/panel/ventas/[id]`: detalle de la venta.
+
+### Presupuestos
+
+- `/panel/presupuestos`: listado con filtro por estado. Un presupuesto pendiente cuya fecha de validez ya pasó se muestra como vencido.
+- `/panel/presupuestos/nuevo`: usa el mismo carrito que la venta, con cliente, fecha de validez (15 días por defecto) y notas. Los precios quedan fijos en el presupuesto y no se descuenta stock.
+- `/panel/presupuestos/[id]`: detalle con tres acciones:
+  - **Descargar PDF** (`/panel/presupuestos/[id]/pdf`): se genera en el servidor con `@react-pdf/renderer`, con logo y datos de `src/config/negocio.ts`.
+  - **Enviar por WhatsApp**: abre `wa.me` con el detalle y el total. Si el teléfono del cliente se puede interpretar como número argentino, abre directo su chat; si no, WhatsApp deja elegir el contacto. El PDF no se adjunta solo: wa.me solo acepta texto.
+  - **Convertir en venta** (o marcarlo como rechazado): registra la venta con los precios del presupuesto, descuenta stock y deja el presupuesto como aceptado con el enlace a la venta.
+
+### Estadísticas
+
+- `/panel/estadisticas`: selector de período (30, 90 o 180 días) que afecta a las tarjetas, los más vendidos y los artículos sin movimiento.
+- Tarjetas de facturación, cantidad de ventas y ticket promedio comparados con el período anterior, y valor del inventario a costo.
+- Facturación de los últimos 6 meses (meses en hora de Argentina; el actual se marca en curso), con tooltip y vista de tabla.
+- Los 10 productos más vendidos por unidades y los artículos con stock sin ventas en el período, ordenados por plata inmovilizada.
+- Los gráficos están hechos con HTML y CSS, sin librerías. El color de las barras (`#4a3d9e`) es un paso más claro que el azul de la marca para que se distinga como relleno.
+
 ## Base de datos
 
 El esquema vive en `src/db/schema/`, con una tabla por archivo:
@@ -150,6 +191,7 @@ El esquema vive en `src/db/schema/`, con una tabla por archivo:
 | `ventas` / `venta_items` | Cada venta y sus productos, con el precio del momento |
 | `presupuestos` / `presupuesto_items` | Presupuestos y su estado; se pueden convertir en venta |
 | `movimientos_stock` | Cada entrada y salida de stock, para auditar |
+| `user` / `session` / `account` / `verification` | Usuarios y sesiones de Better Auth |
 
 Para cambiar el esquema: editar el archivo de la tabla, correr `npm run db:generate`, revisar el SQL generado en `src/db/migrations/` y commitearlo junto con el cambio.
 
@@ -160,6 +202,9 @@ El seed genera siempre los mismos datos: 200 repuestos, 60 clientes, 8 proveedor
 | Variable | Descripción |
 | --- | --- |
 | `DATABASE_URL` | Conexión a MySQL. En local coincide con `docker-compose.yml`. |
+| `BETTER_AUTH_SECRET` | Secreto para firmar sesiones. Generarlo con `openssl rand -base64 32`. |
+| `BETTER_AUTH_URL` | URL pública de la app (`http://localhost:3000` en local). |
+| `DEMO_PASSWORD` | Opcional: contraseña del usuario de demo que crea el seed. |
 
 Nunca subir `.env` al repo; en producción las variables se cargan en Vercel.
 

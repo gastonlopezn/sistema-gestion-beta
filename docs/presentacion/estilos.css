@@ -1,0 +1,116 @@
+/* Estética de la landing: azul y rojo del logo, títulos Barlow Condensed en itálica y franjas diagonales. */
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; src: url(fuentes/barlow-condensed-700.woff2) format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 800; src: url(fuentes/barlow-condensed-800.woff2) format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; font-style: italic; src: url(fuentes/barlow-condensed-700-italic.woff2) format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 800; font-style: italic; src: url(fuentes/barlow-condensed-800-italic.woff2) format("woff2"); }
+@font-face { font-family: "Geist"; font-weight: 100 900; src: url(fuentes/geist.woff2) format("woff2"); }
+
+:root {
+  --rojo: #e42b0f;
+  --azul: #2e226a;
+  --texto: #1f2430;
+  --suave: #5f6472;
+  --fondo: #f5f5f7;
+}
+
+@page { size: 297mm 210mm; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: "Geist", sans-serif; color: var(--texto); font-size: 11.5pt; line-height: 1.45; counter-reset: pagina; }
+
+.pagina {
+  width: 297mm; height: 210mm; position: relative; overflow: hidden;
+  padding: 16mm 18mm 20mm; page-break-after: always; break-after: page;
+  background: white; counter-increment: pagina;
+}
+.pagina:last-child { page-break-after: auto; break-after: auto; }
+.pagina.gris { background: var(--fondo); }
+
+/* Pie de cada página */
+.pagina:not(.portada):not(.cierre)::after {
+  content: "SM Repuestos · Página web y sistema de gestión · " counter(pagina);
+  position: absolute; left: 18mm; bottom: 9mm; font-size: 8pt; color: var(--suave);
+}
+.pagina:not(.portada):not(.cierre)::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3mm; background: var(--azul);
+  border-top: 1.2mm solid var(--rojo);
+}
+
+h1, h2, h3, .etiqueta, .numero { font-family: "Barlow Condensed", sans-serif; text-transform: uppercase; font-style: italic; }
+h1 { font-size: 46pt; font-weight: 800; line-height: 0.95; color: var(--azul); letter-spacing: -0.5pt; }
+h1 em { color: var(--rojo); font-style: italic; }
+h2 { font-size: 30pt; font-weight: 800; color: var(--azul); line-height: 1; }
+h2::after { content: ""; display: block; width: 22mm; height: 2mm; background: var(--rojo); transform: skewX(-12deg); margin-top: 3mm; }
+h3 { font-size: 15pt; font-weight: 700; color: var(--azul); line-height: 1.1; }
+.etiqueta {
+  display: inline-block; background: var(--rojo); color: white; font-weight: 700; font-size: 9.5pt;
+  letter-spacing: 1pt; padding: 1mm 3mm; margin-bottom: 5mm;
+}
+.bajada { color: var(--suave); font-size: 12.5pt; max-width: 150mm; margin-top: 4mm; }
+p + p { margin-top: 2.5mm; }
+
+/* Franjas diagonales como en la landing */
+.franjas { position: absolute; left: -20mm; right: -20mm; height: 22mm; pointer-events: none; }
+.franjas::before, .franjas::after { content: ""; position: absolute; left: 0; right: 0; transform: rotate(-4deg); }
+.franjas::before { background: var(--azul); height: 7mm; bottom: 8mm; }
+.franjas::after { background: var(--rojo); height: 4.5mm; bottom: 1mm; }
+
+/* Portada */
+.portada { background: linear-gradient(180deg, #fff 0%, #f1f1f4 100%); display: flex; align-items: center; gap: 14mm; padding: 0 22mm 30mm; }
+.portada .texto { flex: 1; }
+.portada .franjas { bottom: 4mm; }
+.portada .pie-portada { position: absolute; left: 0; right: 0; bottom: 0; height: 16mm; background: var(--azul); color: white; display: flex; align-items: center; gap: 10mm; padding: 0 22mm; font-size: 9.5pt; }
+.portada .pie-portada strong { font-family: "Barlow Condensed"; font-style: italic; text-transform: uppercase; font-size: 12pt; }
+.tarjeta-logo { width: 88mm; height: 88mm; background: white; box-shadow: 4mm 4mm 0 var(--azul); transform: rotate(3deg); display: flex; align-items: center; justify-content: center; margin-top: -10mm; }
+.tarjeta-logo img { width: 72mm; transform: rotate(-3deg); }
+
+/* Grillas y tarjetas */
+.columnas { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 8mm; }
+.columnas.tres { grid-template-columns: repeat(3, 1fr); gap: 7mm; }
+.tarjeta { background: white; border-top: 1.2mm solid var(--rojo); padding: 6mm; box-shadow: 0 0.6mm 2.5mm rgba(0,0,0,0.08); }
+.gris .tarjeta { background: white; }
+.tarjeta .numero { font-size: 34pt; font-weight: 800; color: var(--rojo); line-height: 1; }
+.tarjeta p { color: var(--suave); font-size: 10.5pt; margin-top: 2mm; }
+
+/* Página de módulo: texto a la izquierda, captura a la derecha */
+.modulo { display: grid; grid-template-columns: 92mm 1fr; gap: 10mm; align-items: center; height: 100%; }
+.modulo .captura { margin-top: 2mm; }
+.lista { list-style: none; margin-top: 6mm; display: flex; flex-direction: column; gap: 3.2mm; }
+.lista li { padding-left: 7mm; position: relative; }
+.lista li::before { content: ""; position: absolute; left: 0; top: 1.6mm; width: 3.5mm; height: 2.2mm; background: var(--rojo); transform: skewX(-12deg); }
+.lista li strong { color: var(--azul); }
+
+.captura { border-radius: 2.5mm; overflow: hidden; box-shadow: 0 2mm 8mm rgba(46,34,106,0.18); border: 0.3mm solid #e2e2e8; background: white; }
+.captura .barra { height: 6mm; background: #ececf1; display: flex; align-items: center; gap: 1.5mm; padding: 0 3mm; }
+.captura .barra i { width: 2mm; height: 2mm; border-radius: 50%; background: #c9c9d3; }
+.captura img { display: block; width: 100%; }
+.celular { width: 52mm; border-radius: 7mm; border: 2.2mm solid #1d1d24; overflow: hidden; box-shadow: 0 2mm 8mm rgba(0,0,0,0.25); background: white; }
+.celular img { display: block; width: 100%; }
+.nota { font-size: 8.5pt; color: var(--suave); margin-top: 3mm; }
+
+/* Banda azul de beneficios, como la de la landing */
+.banda { background: var(--azul); color: white; margin: 12mm -18mm 0; padding: 14mm 18mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14mm 12mm; }
+.banda h3 { color: white; font-size: 17pt; }
+.banda h3::before { content: ""; display: inline-block; width: 3mm; height: 3mm; background: var(--rojo); transform: skewX(-12deg); margin-right: 2mm; }
+.banda p { color: #cfcbe6; font-size: 11pt; margin-top: 2mm; }
+
+/* Línea de tiempo */
+.pasos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4mm; margin-top: 10mm; position: relative; }
+.pasos::before { content: ""; position: absolute; top: 7mm; left: 6mm; right: 6mm; height: 1mm; background: #d9d6ea; }
+.paso { position: relative; }
+.paso .circulo { width: 14mm; height: 14mm; border-radius: 50%; background: var(--azul); color: white; display: flex; align-items: center; justify-content: center; font-family: "Barlow Condensed"; font-weight: 800; font-style: italic; font-size: 18pt; position: relative; }
+.paso.actual .circulo { background: var(--rojo); }
+.paso h3 { margin-top: 4mm; font-size: 13pt; }
+.paso p { font-size: 9.5pt; color: var(--suave); margin-top: 1.5mm; }
+
+.preguntas { columns: 2; column-gap: 12mm; margin-top: 6mm; }
+.preguntas li { break-inside: avoid; margin-bottom: 3mm; }
+
+/* Cierre */
+.cierre { background: var(--azul); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.cierre h1 { color: white; font-size: 58pt; }
+.cierre p { color: #cfcbe6; margin-top: 4mm; font-size: 13pt; }
+.cierre .logo-blanco { background: white; padding: 5mm; margin-bottom: 10mm; box-shadow: 3mm 3mm 0 var(--rojo); }
+.cierre .logo-blanco img { width: 42mm; display: block; }
+.cierre .franjas { bottom: 6mm; }
+.cierre .franjas::before { background: white; }

@@ -8,6 +8,20 @@
       "when": 1795805382960,
       "tag": "0000_inicial",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1795807418019,
+      "tag": "0001_auth",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1795811400322,
+      "tag": "0002_actualizaciones_precios",
+      "breakpoints": true
     }
   ]
 }
